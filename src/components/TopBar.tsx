@@ -22,10 +22,10 @@ function TopBar() {
     // </Grid>
     <div className="flex align-middle bg-gray-600 shadow p-3">
       <Link href="/">
-        <a className="text-2xl">Home</a>
+        <Button mr={3}>Home</Button>
       </Link>
       <Link href="/products">
-        <a className="text-2xl ml-4">Products</a>
+        <Button>Products</Button>
       </Link>
       <div className="flex-grow"></div>
       <Button onClick={onLoad}>Load</Button>

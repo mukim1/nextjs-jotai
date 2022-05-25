@@ -23,9 +23,9 @@ const Products = () => {
       .then((res: ProductType[]) => setProducts(res));
   }, []);
 
-  console.log([{name:"marjan", roll:30}]);
+  console.log([{ name: "marjan", roll: 30 }]);
 
-  console.log(products)
+  console.log(products);
 
   return (
     <div className="max-w-screen-xl px-2 lg:px-16 m-auto mt-10 grid grid-cols-4 gap-3">
@@ -37,13 +37,16 @@ const Products = () => {
       </div>
       <div className="col-span-1">
         {cart?.map((item) => (
-          <div className="" key={item.id}>
+          <div className=" bg-gray-600 p-2 mb-3" key={item.id}>
             <Image src={item.image} width="100px" height="100px" />
             <p>{item.title.slice(0, 25) + "..."}</p>
             <p>
-              Price: {item.price} Quantity: {item.quantity}
+              Price: {item.price}
+              {/* Quantity: {item.quantity} */}
             </p>
-            <p></p>
+            <p>
+              <UpdateCartBtn isInCart={item} />
+            </p>
           </div>
         ))}
       </div>
@@ -53,7 +56,6 @@ const Products = () => {
 
 const DisplayProductItem = ({ item }: { item: ProductType }) => {
   const [, addToCart] = useAtom(addToCartAtom);
-  const [, updateToCart] = useAtom(updateCartAtom);
   const [cart] = useAtom(cartAtom);
 
   const isInCart = cart.find((itm) => itm.id === item.id);
@@ -75,29 +77,7 @@ const DisplayProductItem = ({ item }: { item: ProductType }) => {
         <p>Price: {item.price}</p>
         {isInCart ? (
           <div className=" text-right">
-            <ButtonGroup size="md" isAttached variant="outline">
-              <IconButton
-                onClick={() => {
-                  updateToCart({
-                    ...isInCart,
-                    quantity: isInCart.quantity - 1,
-                  });
-                }}
-                aria-label="Add to friends"
-                icon={<IoMdRemove />}
-              />
-              <Button>{isInCart.quantity}</Button>
-              <IconButton
-                onClick={() => {
-                  updateToCart({
-                    ...isInCart,
-                    quantity: isInCart.quantity + 1,
-                  });
-                }}
-                aria-label="Add to friends"
-                icon={<GrAdd />}
-              />
-            </ButtonGroup>
+            <UpdateCartBtn isInCart={isInCart} />
           </div>
         ) : (
           <Button
@@ -111,6 +91,35 @@ const DisplayProductItem = ({ item }: { item: ProductType }) => {
         )}
       </div>
     </div>
+  );
+};
+
+const UpdateCartBtn = ({ isInCart }: { isInCart: any }) => {
+  const [, updateToCart] = useAtom(updateCartAtom);
+  return (
+    <ButtonGroup size="md" isAttached variant="outline">
+      <IconButton
+        onClick={() => {
+          updateToCart({
+            ...isInCart,
+            quantity: isInCart.quantity - 1,
+          });
+        }}
+        aria-label="Add to friends"
+        icon={<IoMdRemove />}
+      />
+      <Button>{isInCart.quantity}</Button>
+      <IconButton
+        onClick={() => {
+          updateToCart({
+            ...isInCart,
+            quantity: isInCart.quantity + 1,
+          });
+        }}
+        aria-label="Add to friends"
+        icon={<GrAdd />}
+      />
+    </ButtonGroup>
   );
 };
 
