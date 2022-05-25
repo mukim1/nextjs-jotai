@@ -12,7 +12,7 @@ import {
 import { GrAdd } from "react-icons/gr";
 import { IoMdRemove } from "react-icons/io";
 
-const products = () => {
+const Products = () => {
   const [cart] = useAtom(cartAtom);
   const [products, setProducts] = useAtom(productsAtom);
 
@@ -37,7 +37,7 @@ const products = () => {
       </div>
       <div className="col-span-1">
         {cart?.map((item) => (
-          <div className="">
+          <div className="" key={item.id}>
             <Image src={item.image} width="100px" height="100px" />
             <p>{item.title.slice(0, 25) + "..."}</p>
             <p>
@@ -114,4 +114,4 @@ const DisplayProductItem = ({ item }: { item: ProductType }) => {
   );
 };
 
-export default products;
+export default Products;
